@@ -1,0 +1,8 @@
+[tools]
+pipx = "1.7.1"
+"pipx:ansible-core" = "2.17.5"
+poetry = "1.8.5"
+pre-commit = "4.0.1"
+python = "3.12.8"
+terraform = "1.8.5"
+go = "1.21"
