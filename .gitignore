@@ -1,0 +1,32 @@
+# Fichiers binaires compilés
+*.exe
+*.out
+*.o
+
+# Fichiers de dépendances
+vendor/
+
+# Modules Go
+go.sum
+go.mod
+
+# Cache Go
+*.test
+*.a
+
+# Configuration Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Logs et fichiers temporaires
+*.log
+*.tmp
+*.swp
+
+# Fichiers d'éditeur
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,8 +1,6 @@
-module github.com/yourusername/terraform-provider-valohai
+module github.com/tacy-OPS/terraform-provider-valohai
 
-go 1.22.0
-
-toolchain go1.23.8
+go 1.24.2
 
 require (
 	github.com/agext/levenshtein v1.2.2 // indirect
