@@ -4,12 +4,12 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-// Fonction pour configurer le provider
-func providerConfigure(d *schema.ResourceData) (interface{}, error) {
-	// Récupérer le token depuis la configuration
+// configureProvider configures the provider.
+func configureProvider(d *schema.ResourceData) (interface{}, error) {
+	// Retrieve the token from the configuration
 	authToken := d.Get("token").(string)
 
-	// Retourner un objet contenant le token pour l'utiliser dans les ressources
+	// Return an object containing the token for use in resources
 	return map[string]interface{}{
 		"token": authToken,
 	}, nil
@@ -33,7 +33,7 @@ func Provider() *schema.Provider {
 
 		DataSourcesMap: map[string]*schema.Resource{},
 
-		// Ajout du ConfigureFunc pour initialiser la configuration du provider
-		ConfigureFunc: providerConfigure,
+		// Add ConfigureFunc to initialize the provider configuration
+		ConfigureFunc: configureProvider,
 	}
 }

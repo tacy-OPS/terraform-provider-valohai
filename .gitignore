@@ -30,3 +30,7 @@ go.mod
 .vscode/
 .DS_Store
 Thumbs.db
+
+
+# Fichiers binaires
+./*terraform-provider-valohai*
