@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "metadata": {
+    "protocol_versions": ["5.0"],
+    "provider": {
+      "name": "valohai",
+      "description": "Terraform provider for Valohai integration"
+    }
+  }
+}
