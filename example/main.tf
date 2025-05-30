@@ -12,5 +12,5 @@ provider "valohai" {}
 resource "valohai_project" "example" {
   name        = "example"
   description = "example terraform project"
-  owner = "org-tacy-ops"
+  owner = "example"
 }

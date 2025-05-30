@@ -1,6 +1,6 @@
 # Terraform Provider Valohai
 
-[![Build Status](https://github.com/tacy-OPS/terraform-provider-valohai/actions/workflows/release.yml/badge.svg)](https://github.com/tacy-OPS/terraform-provider-valohai/actions)
+[![Build Status](https://github.com/tacy-OPS/terraform-provider-valohai/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tacy-OPS/terraform-provider-valohai/actions)
 [![Go Version](https://img.shields.io/badge/go-1.21%2B-blue.svg)](https://golang.org/doc/go1.21)
 [![License](https://img.shields.io/github/license/tacy-OPS/terraform-provider-valohai)](./LICENCE)
 
