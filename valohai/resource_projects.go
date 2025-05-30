@@ -102,7 +102,7 @@ func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("failed to decode response: %w", err)
 	}
 
-	d.SetId(result.ID)
+	d.SetId(result.ID) // Stocke l'UUID Valohai comme ID de la ressource
 
 	return nil
 }
@@ -118,7 +118,24 @@ func resourceProjectUpdate(d *schema.ResourceData, m interface{}) error {
 }
 
 func resourceProjectDelete(d *schema.ResourceData, m interface{}) error {
-	// Implement logic to delete a project.
+	authToken := m.(map[string]interface{})["token"].(string)
+	id := d.Id() // UUID du projet Valohai
+	url := fmt.Sprintf("https://app.valohai.com/api/v0/projects/%s/", id)
+
+	req, err := http.NewRequest("DELETE", url, nil)
+	if err != nil {
+		return fmt.Errorf("failed to create DELETE request: %w", err)
+	}
+	req.Header.Set("Authorization", "Token "+authToken)
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return fmt.Errorf("failed to execute DELETE request: %w", err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusNoContent && resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("unexpected status code: %d while deleting project %s", resp.StatusCode, id)
+	}
 	return nil
 }
 
