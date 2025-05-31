@@ -1,0 +1,69 @@
+name: 🐛 Bug Report
+description: Report a bug in the Terraform provider
+title: "[BUG] "
+labels: [bug]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please describe the issue you're encountering in as much detail as possible.
+
+  - type: input
+    id: resource
+    attributes:
+      label: Resource or Data Source (if applicable)
+      description: The resource or data source where the bug appears
+      placeholder: ex: example_service
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of the issue.
+      placeholder: |
+        Example:
+        When applying the `example_service` resource, the `enabled` field is always set to false.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce the bug?
+      placeholder: |
+        1. Define the resource with this configuration...
+        2. Run `terraform apply`
+        3. Observe unexpected behavior...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Logs / Output
+      description: Paste any relevant logs or Terraform error output.
+      placeholder: |
+        Error: unexpected response code 500 from API...
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: Provider Version
+      placeholder: ex: 0.2.1
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: [ ] This bug is not already reported
+        - label: [ ] I’ve provided all the necessary details to reproduce it

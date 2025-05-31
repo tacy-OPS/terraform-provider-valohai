@@ -1,0 +1,40 @@
+name: 💡 Idea / Exploration
+description: Log an idea or experiment for future discussion
+title: "[IDEA] "
+labels: [enhancement, discussion]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Got an idea to improve the provider or explore something new? Let’s capture it here.
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: Idea Summary
+      description: Describe your idea or suggestion.
+      placeholder: |
+        Example:
+        Investigate supporting data sources for listing available services.
+    validations:
+      required: true
+
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Why this would be useful
+      description: Describe the motivation or benefit.
+      placeholder: |
+        Users could dynamically fetch data instead of hardcoding it.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: [ ] This idea is not already tracked
+        - label: [ ] The purpose and scope are clear
