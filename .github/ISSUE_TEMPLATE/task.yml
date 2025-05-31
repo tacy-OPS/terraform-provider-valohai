@@ -1,0 +1,40 @@
+name: 🛠️ Internal Task
+description: Log a small or internal task for the provider
+title: "[TASK] "
+labels: [chore]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This template is intended for internal technical tasks, refactors, or cleanup.
+
+  - type: textarea
+    id: task
+    attributes:
+      label: Task Description
+      description: What needs to be done?
+      placeholder: |
+        Example:
+        Refactor the API client to reuse authentication middleware.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context / Rationale
+      description: Why is this task important?
+      placeholder: |
+        This will help reduce duplication and improve maintainability.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: "[ ] Task is well-defined and actionable"
+        - label: "[ ] No major changes to external behavior"

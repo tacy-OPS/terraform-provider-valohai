@@ -1,0 +1,52 @@
+name: 🚀 Feature Request
+description: Suggest a new feature for the Terraform provider
+title: "[FEATURE] "
+labels: [feature]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for contributing to the Terraform provider!  
+        Please fill out the details below to propose a new feature.
+
+  - type: input
+    id: resource
+    attributes:
+      label: Resource or Data Source
+      description: Name of the resource or data source (e.g., `example_service`) or `provider` if it's a global change.
+      placeholder: "ex: example_service"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: What would you like to see added and why?
+      placeholder: |
+        Example:
+        Add a new resource to manage example services using the API.
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Technical Details (optional)
+      description: Any implementation notes, API endpoints, required fields, etc.
+      placeholder: |
+        - Uses the `/api/v1/services` endpoint
+        - Required fields: `name`, `description`, `enabled`
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: "[ ] Follows the provider’s naming and structure conventions"
+        - label: "[ ] Unit tests will be added"
+        - label: "[ ] Terraform documentation will be updated"
