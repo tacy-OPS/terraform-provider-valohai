@@ -1,8 +1,8 @@
 # Terraform Provider Valohai
 
-[![Build Status](https://github.com/tacy-OPS/terraform-provider-valohai/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tacy-OPS/terraform-provider-valohai/actions)
+[![Build Status](https://github.com/tacy-ops/terraform-provider-valohai/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/tacy-ops/terraform-provider-valohai/actions)
 [![Go Version](https://img.shields.io/badge/go-1.21%2B-blue.svg)](https://golang.org/doc/go1.21)
-[![License](https://img.shields.io/github/license/tacy-OPS/terraform-provider-valohai)](./LICENCE)
+[![License](https://img.shields.io/github/license/tacy-ops/terraform-provider-valohai)](./LICENCE)
 
 A Terraform provider to manage Valohai projects and resources.
 
@@ -15,11 +15,11 @@ A Terraform provider to manage Valohai projects and resources.
 
 ## Installation
 
-Recommended: Install from the [Terraform Registry](https://registry.terraform.io/providers/tacy-OPS/valohai/latest).
+Recommended: Install from the [Terraform Registry](https://registry.terraform.io/providers/tacy-ops/valohai/latest).
 
 Manual build:
 ```sh
-git clone https://github.com/tacy-OPS/terraform-provider-valohai.git
+git clone https://github.com/tacy-ops/terraform-provider-valohai.git
 cd terraform-provider-valohai
 go build -o terraform-provider-valohai
 ```

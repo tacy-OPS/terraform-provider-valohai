@@ -1,4 +1,4 @@
-module github.com/tacy-OPS/terraform-provider-valohai
+module github.com/tacy-ops/terraform-provider-valohai
 
 go 1.24.2
 
