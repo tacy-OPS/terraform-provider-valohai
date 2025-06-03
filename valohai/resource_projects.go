@@ -149,7 +149,7 @@ func resourceProjectRead(d *schema.ResourceData, m interface{}) error {
 				msg, _ := first["message"].(string)
 				code, _ := first["code"].(string)
 				if code != "" || msg != "" {
-					return fmt.Errorf("API error %d: %s %s", resp.StatusCode, code, msg)
+					return fmt.Errorf("API error %d (%s) - %s", resp.StatusCode, code, msg)
 				}
 			}
 		}
@@ -231,7 +231,7 @@ func resourceProjectUpdate(d *schema.ResourceData, m interface{}) error {
 				msg, _ := first["message"].(string)
 				code, _ := first["code"].(string)
 				if code != "" || msg != "" {
-					return fmt.Errorf("API error %d: %s %s", resp.StatusCode, code, msg)
+					return fmt.Errorf("API error %d (%s) - %s", resp.StatusCode, code, msg)
 				}
 			}
 		}
