@@ -31,7 +31,9 @@ func Provider() *schema.Provider {
 			"valohai_project": resourceProject(),
 		},
 
-		DataSourcesMap: map[string]*schema.Resource{},
+		DataSourcesMap: map[string]*schema.Resource{
+			"valohai_project": dataSourceProject(),
+		},
 
 		// Add ConfigureFunc to initialize the provider configuration
 		ConfigureFunc: configureProvider,
