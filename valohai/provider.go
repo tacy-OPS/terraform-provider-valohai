@@ -29,6 +29,7 @@ func Provider() *schema.Provider {
 
 		ResourcesMap: map[string]*schema.Resource{
 			"valohai_project": resourceProject(),
+			"valohai_team":    resourceTeam(),
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
@@ -39,3 +40,5 @@ func Provider() *schema.Provider {
 		ConfigureFunc: configureProvider,
 	}
 }
+
+// (getOrganizationID and UserResponse moved to utils.go)
