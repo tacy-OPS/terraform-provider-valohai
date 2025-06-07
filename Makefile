@@ -76,6 +76,10 @@ tfplan:
 
 dev: clean build install-local check-binary tfinit tfplan
 
+test:
+	@echo "🧪 Running tests..."
+	go test -v ./...
+
 clean:
 	@echo "🧹 Cleaning binaries..."
 	rm -f $(BINARY) $(BINARY).exe
