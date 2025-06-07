@@ -24,8 +24,8 @@ func testAccCheckValohaiTeamDestroy(s *terraform.State) error {
 }
 
 func TestAccValohaiTeamBasic(t *testing.T) {
-	if os.Getenv("VALOHAI_API_TOKEN") == "" {
-		t.Skip("VALOHAI_API_TOKEN is not set; skipping acceptance test.")
+	if os.Getenv("VALOHAI_API_TOKEN") == "" || os.Getenv("VALOHAI_ORGANIZATION") == "" {
+		t.Skip("VALOHAI_API_TOKEN or VALOHAI_ORGANIZATION is not set; skipping acceptance test.")
 	}
 	valohaiOrganization := getValohaiOrganization()
 	name := fmt.Sprintf("tf-acc-test-team-%s", uuid.New().String())
@@ -34,6 +34,9 @@ func TestAccValohaiTeamBasic(t *testing.T) {
 		PreCheck: func() {
 			if os.Getenv("VALOHAI_API_TOKEN") == "" {
 				t.Fatal("VALOHAI_API_TOKEN must be set for acceptance tests")
+			}
+			if os.Getenv("VALOHAI_ORGANIZATION") == "" {
+				t.Fatal("VALOHAI_ORGANIZATION must be set for acceptance tests")
 			}
 		},
 		ProviderFactories: ProviderFactories,
@@ -55,8 +58,8 @@ resource "valohai_team" "test" {
 }
 
 func TestAccValohaiTeamUpdate(t *testing.T) {
-	if os.Getenv("VALOHAI_API_TOKEN") == "" {
-		t.Skip("VALOHAI_API_TOKEN is not set; skipping acceptance test.")
+	if os.Getenv("VALOHAI_API_TOKEN") == "" || os.Getenv("VALOHAI_ORGANIZATION") == "" {
+		t.Skip("VALOHAI_API_TOKEN or VALOHAI_ORGANIZATION is not set; skipping acceptance test.")
 	}
 	valohaiOrganization := getValohaiOrganization()
 	name := fmt.Sprintf("tf-acc-test-team-update-%s", uuid.New().String())
@@ -96,8 +99,8 @@ resource "valohai_team" "test" {
 }
 
 func TestAccValohaiTeamDelete(t *testing.T) {
-	if os.Getenv("VALOHAI_API_TOKEN") == "" {
-		t.Skip("VALOHAI_API_TOKEN is not set; skipping acceptance test.")
+	if os.Getenv("VALOHAI_API_TOKEN") == "" || os.Getenv("VALOHAI_ORGANIZATION") == "" {
+		t.Skip("VALOHAI_API_TOKEN or VALOHAI_ORGANIZATION is not set; skipping acceptance test.")
 	}
 	valohaiOrganization := getValohaiOrganization()
 	name := uniqueName("tf-acc-test-team-delete")
@@ -106,6 +109,9 @@ func TestAccValohaiTeamDelete(t *testing.T) {
 		PreCheck: func() {
 			if os.Getenv("VALOHAI_API_TOKEN") == "" {
 				t.Fatal("VALOHAI_API_TOKEN must be set for acceptance tests")
+			}
+			if os.Getenv("VALOHAI_ORGANIZATION") == "" {
+				t.Fatal("VALOHAI_ORGANIZATION must be set for acceptance tests")
 			}
 		},
 		ProviderFactories: ProviderFactories,
