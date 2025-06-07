@@ -1,0 +1,4 @@
+description: |
+  Terraform provider for Valohai. Manage Valohai projects and teams as code.
+  
+  This provider allows you to create, update, and delete Valohai projects and teams directly from your Terraform configuration. It supports importing existing resources and is suitable for automation and CI/CD workflows.

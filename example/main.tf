@@ -14,3 +14,8 @@ resource "valohai_project" "example" {
   description = "example terraform project"
   owner = "org-tacy-ops"
 }
+
+resource "valohai_team" "example" {
+  name         = "example-2"
+  organization = 0
+}

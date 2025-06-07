@@ -14,6 +14,7 @@ This provider allows you to manage Valohai resources using Terraform.
 ## Resources
 
 - [valohai_project](resources/valohai_project.md)
+- [valohai_team](resources/valohai_team.md)
 
 ## Data Sources
 
