@@ -7,15 +7,17 @@ terraform {
   }
 }
 
-provider "valohai" {}
+provider "valohai" {
+  token = "example"
+}
 
 resource "valohai_project" "example" {
-  name        = "example"
+  name        = "example-terraform-project"
   description = "example terraform project"
   owner = "org-tacy-ops"
 }
 
 resource "valohai_team" "example" {
-  name         = "example-2"
+  name         = "example-terraform-team"
   organization = 0
 }

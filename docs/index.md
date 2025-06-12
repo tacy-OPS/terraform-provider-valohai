@@ -11,6 +11,21 @@ Welcome to the Valohai Terraform provider documentation.
 
 This provider allows you to manage Valohai resources using Terraform.
 
+## Provider Configuration
+
+To use the Valohai provider, you must supply a valid API token. You can create this token in your Valohai account (see the official Valohai documentation for more details).
+
+![Get your Valohai API token](https://help.valohai.com/hc/article_attachments/4419921059345/get_auth_token.gif)
+
+Example configuration:
+
+
+```hcl
+provider "valohai" {
+  token = "<your_valohai_token>"
+}
+```
+
 ## Resources
 
 - [valohai_project](resources/valohai_project.md): Manage Valohai projects
