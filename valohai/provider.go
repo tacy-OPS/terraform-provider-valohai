@@ -28,8 +28,9 @@ func Provider() *schema.Provider {
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"valohai_project": resourceProject(),
-			"valohai_team":    resourceTeam(),
+			"valohai_project":   resourceProject(),
+			"valohai_team":      resourceTeam(),
+			"valohai_datastore": resourceDatastore(),
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
