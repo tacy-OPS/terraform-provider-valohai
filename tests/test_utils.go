@@ -25,3 +25,11 @@ func deleteTestStateFiles() {
 		}
 	}
 }
+
+func getValohaiOrganization() string {
+	organization := os.Getenv("VALOHAI_ORGANIZATION")
+	if organization == "" {
+		panic("The VALOHAI_ORGANIZATION environment variable must be set for acceptance tests.")
+	}
+	return organization
+}

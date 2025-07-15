@@ -10,15 +10,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 )
 
-func getValohaiOrganization() string {
-	organization := os.Getenv("VALOHAI_ORGANIZATION")
-	if organization == "" {
-		panic("The VALOHAI_ORGANIZATION environment variable must be set for acceptance tests.")
-	}
-	return organization
-}
-
-// Redéfinir testAccCheckValohaiTeamDestroy localement
 func testAccCheckValohaiTeamDestroy(s *terraform.State) error {
 	return nil
 }
