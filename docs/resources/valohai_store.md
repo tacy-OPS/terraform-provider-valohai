@@ -1,11 +1,11 @@
 
 # valohai_store Resource
 
-
 The `valohai_store` resource allows you to manage stores in Valohai via Terraform.
 
 ## Example Usage
 
+### Access mode teams
 ```hcl
 resource "valohai_store" "example" {
   name        = "example-terraform-store"           # Unique name for the store
@@ -25,13 +25,9 @@ resource "valohai_store" "example" {
     # endpoint_url = "http://s3.test.com"
     # role_arn = "arn:aws:iam::123456789012:role/MyExampleRole"
     # kms_key_arn = "arn:aws:kms:us-west-2:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab"
-    # use_presigned_put_object = false
-    # insecure = false
-    # skip_upload_file_name_check = false
   }
 
   owner_id = 9506                                         # Organization ID
-  project  = valohai_project.example.id                   # Associated project
   paths = {
     "input"  = "data/input"
     "output" = "data/output"
