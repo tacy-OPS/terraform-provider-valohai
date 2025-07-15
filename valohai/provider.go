@@ -28,19 +28,17 @@ func Provider() *schema.Provider {
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"valohai_project":   resourceProject(),
-			"valohai_team":      resourceTeam(),
-			"valohai_datastore": resourceDatastore(),
+			"valohai_project": resourceProject(),
+			"valohai_team":    resourceTeam(),
+			"valohai_store":   resourceStore(),
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
 			"valohai_project": dataSourceProject(),
 			"valohai_team":    dataSourceTeam(),
+			"valohai_store":   dataSourceStore(),
 		},
 
-		// Add ConfigureFunc to initialize the provider configuration
 		ConfigureFunc: configureProvider,
 	}
 }
-
-// (getOrganizationID and UserResponse moved to utils.go)
