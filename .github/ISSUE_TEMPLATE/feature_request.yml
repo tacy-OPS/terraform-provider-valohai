@@ -47,6 +47,6 @@ body:
     attributes:
       label: Checklist
       options:
-        - label: "[ ] Follows the provider’s naming and structure conventions"
-        - label: "[ ] Unit tests will be added"
-        - label: "[ ] Terraform documentation will be updated"
+        - label: Follows the provider's naming and structure conventions"
+        - label: Unit tests will be added"
+        - label: Terraform documentation will be updated"

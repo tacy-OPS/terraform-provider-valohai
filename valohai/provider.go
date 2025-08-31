@@ -1,6 +1,8 @@
 package valohai
 
 import (
+	"os"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -8,6 +10,10 @@ import (
 func configureProvider(d *schema.ResourceData) (interface{}, error) {
 	// Retrieve the token from the configuration
 	authToken := d.Get("token").(string)
+	if authToken == "" {
+		// Fallback to environment variable if not set in provider config
+		authToken = os.Getenv("VALOHAI_API_TOKEN")
+	}
 
 	// Return an object containing the token for use in resources
 	return map[string]interface{}{
@@ -20,7 +26,7 @@ func Provider() *schema.Provider {
 		Schema: map[string]*schema.Schema{
 			"token": {
 				Type:        schema.TypeString,
-				Required:    true,
+				Optional:    true,
 				DefaultFunc: schema.EnvDefaultFunc("VALOHAI_API_TOKEN", nil),
 				Description: "Valohai API token.",
 				Sensitive:   true,

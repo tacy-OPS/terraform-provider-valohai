@@ -8,7 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Got an idea to improve the provider or explore something new? Let’s capture it here.
+        Got an idea to improve the provider or explore something new? Let's capture it here.
 
   - type: textarea
     id: idea
@@ -36,5 +36,5 @@ body:
     attributes:
       label: Checklist
       options:
-        - label: "[ ] This idea is not already tracked"
-        - label: "[ ] The purpose and scope are clear"
+        - label: This idea is not already tracked"
+        - label: The purpose and scope are clear"

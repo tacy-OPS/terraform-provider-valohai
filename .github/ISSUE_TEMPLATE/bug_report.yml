@@ -65,5 +65,5 @@ body:
     attributes:
       label: Checklist
       options:
-        - label: "[ ] This bug is not already reported"
-        - label: "[ ] I’ve provided all the necessary details to reproduce it"
+        - label: This bug is not already reported"
+        - label: I've provided all the necessary details to reproduce it"

@@ -36,5 +36,5 @@ body:
     attributes:
       label: Checklist
       options:
-        - label: "[ ] Task is well-defined and actionable"
-        - label: "[ ] No major changes to external behavior"
+        - label: Task is well-defined and actionable"
+        - label: No major changes to external behavior"

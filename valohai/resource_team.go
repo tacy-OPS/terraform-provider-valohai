@@ -1,12 +1,14 @@
 package valohai
 
 import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"net/http"
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+    "strings"
 
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+    "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func resourceTeam() *schema.Resource {
@@ -73,22 +75,10 @@ func resourceTeamCreate(d *schema.ResourceData, m interface{}) error {
 	}
 	defer resp.Body.Close()
 
-	// Check HTTP status code
-	if resp.StatusCode != http.StatusCreated {
-		var errResp map[string]interface{}
-		json.NewDecoder(resp.Body).Decode(&errResp)
-		// Extraction du message et du code d'erreur s'ils existent
-		if nonField, ok := errResp["non_field_errors"].([]interface{}); ok && len(nonField) > 0 {
-			if first, ok := nonField[0].(map[string]interface{}); ok {
-				msg, _ := first["message"].(string)
-				code, _ := first["code"].(string)
-				if code != "" || msg != "" {
-					return fmt.Errorf("API error %d (%s) - %s", resp.StatusCode, code, msg)
-				}
-			}
-		}
-		return fmt.Errorf("API error %d", resp.StatusCode)
-	}
+    // Check HTTP status code
+    if resp.StatusCode != http.StatusCreated {
+        return parseAPIError(resp)
+    }
 
 	// Decode response
 	var result struct {
@@ -127,20 +117,9 @@ func resourceTeamRead(d *schema.ResourceData, m interface{}) error {
 		d.SetId("") // Not found, remove from state
 		return nil
 	}
-	if resp.StatusCode != http.StatusOK {
-		var errResp map[string]interface{}
-		json.NewDecoder(resp.Body).Decode(&errResp)
-		if nonField, ok := errResp["non_field_errors"].([]interface{}); ok && len(nonField) > 0 {
-			if first, ok := nonField[0].(map[string]interface{}); ok {
-				msg, _ := first["message"].(string)
-				code, _ := first["code"].(string)
-				if code != "" || msg != "" {
-					return fmt.Errorf("API error %d (%s) - %s", resp.StatusCode, code, msg)
-				}
-			}
-		}
-		return fmt.Errorf("API error %d", resp.StatusCode)
-	}
+    if resp.StatusCode != http.StatusOK {
+        return parseAPIError(resp)
+    }
 
 	// Decode response
 	type organization struct {
@@ -196,21 +175,9 @@ func resourceTeamUpdate(d *schema.ResourceData, m interface{}) error {
 	defer resp.Body.Close()
 
 	// Check HTTP status code
-	if resp.StatusCode != http.StatusOK {
-		var errResp map[string]interface{}
-		json.NewDecoder(resp.Body).Decode(&errResp)
-		// Extraction du message et du code d'erreur s'ils existent
-		if nonField, ok := errResp["non_field_errors"].([]interface{}); ok && len(nonField) > 0 {
-			if first, ok := nonField[0].(map[string]interface{}); ok {
-				msg, _ := first["message"].(string)
-				code, _ := first["code"].(string)
-				if code != "" || msg != "" {
-					return fmt.Errorf("API error %d (%s) - %s", resp.StatusCode, code, msg)
-				}
-			}
-		}
-		return fmt.Errorf("API error %d", resp.StatusCode)
-	}
+    if resp.StatusCode != http.StatusOK {
+        return parseAPIError(resp)
+    }
 
 	// Decode response
 	var result struct {
@@ -240,9 +207,82 @@ func resourceTeamDelete(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("failed to execute DELETE request: %w", err)
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode == http.StatusNotFound || resp.StatusCode == http.StatusNoContent || resp.StatusCode == http.StatusOK {
-		// 404 = already deleted, 204/200 = deleted OK
-		return nil
-	}
-	return fmt.Errorf("unexpected status code: %d while deleting team %s", resp.StatusCode, id)
+    if resp.StatusCode == http.StatusNotFound || resp.StatusCode == http.StatusNoContent || resp.StatusCode == http.StatusOK {
+        // 404 = already deleted, 204/200 = deleted OK
+        return nil
+    }
+    return parseAPIError(resp)
+}
+
+// parseAPIError tries to extract a meaningful message from the API error body.
+// It supports several common patterns used by Django REST Framework and others:
+// - {"detail": "...", "code": "..."}
+// - {"message": "..."}
+// - {"error": "..."}
+// - {"non_field_errors": ["..." or {"message":"...","code":"..."}]}
+// - {"errors": [...] } or per-field arrays; falls back to raw text.
+func parseAPIError(resp *http.Response) error {
+    status := resp.StatusCode
+    b, _ := io.ReadAll(resp.Body)
+    raw := strings.TrimSpace(string(b))
+
+    // Try JSON decoding first
+    var m map[string]interface{}
+    if err := json.Unmarshal(b, &m); err == nil && m != nil {
+        // detail + optional code (DRF)
+        if detail, ok := m["detail"].(string); ok && detail != "" {
+            if code, ok := m["code"].(string); ok && code != "" {
+                return fmt.Errorf("API error %d (%s) - %s", status, code, detail)
+            }
+            return fmt.Errorf("API error %d - %s", status, detail)
+        }
+        // message
+        if msg, ok := m["message"].(string); ok && msg != "" {
+            if code, ok := m["code"].(string); ok && code != "" {
+                return fmt.Errorf("API error %d (%s) - %s", status, code, msg)
+            }
+            return fmt.Errorf("API error %d - %s", status, msg)
+        }
+        // error
+        if msg, ok := m["error"].(string); ok && msg != "" {
+            return fmt.Errorf("API error %d - %s", status, msg)
+        }
+        // non_field_errors: could be array of strings or objects
+        if arr, ok := m["non_field_errors"].([]interface{}); ok && len(arr) > 0 {
+            switch first := arr[0].(type) {
+            case string:
+                return fmt.Errorf("API error %d - %s", status, first)
+            case map[string]interface{}:
+                msg, _ := first["message"].(string)
+                code, _ := first["code"].(string)
+                if msg != "" || code != "" {
+                    if code != "" {
+                        return fmt.Errorf("API error %d (%s) - %s", status, code, msg)
+                    }
+                    return fmt.Errorf("API error %d - %s", status, msg)
+                }
+            }
+        }
+        // errors: could be slice or field map
+        if errs, ok := m["errors"].([]interface{}); ok && len(errs) > 0 {
+            if msg, ok := errs[0].(string); ok && msg != "" {
+                return fmt.Errorf("API error %d - %s", status, msg)
+            }
+        }
+        if fieldMap, ok := m["errors"].(map[string]interface{}); ok {
+            for _, v := range fieldMap {
+                if arr, ok := v.([]interface{}); ok && len(arr) > 0 {
+                    if msg, ok := arr[0].(string); ok && msg != "" {
+                        return fmt.Errorf("API error %d - %s", status, msg)
+                    }
+                }
+            }
+        }
+    }
+
+    // Fallback: return raw body if any
+    if raw != "" {
+        return fmt.Errorf("API error %d - %s", status, raw)
+    }
+    return fmt.Errorf("API error %d", status)
 }

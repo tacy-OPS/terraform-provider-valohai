@@ -19,6 +19,7 @@ go.mod
 *.tfstate.backup
 .terraform/
 .terraform.lock.hcl
+.env
 
 # Logs et fichiers temporaires
 *.log
