@@ -41,9 +41,9 @@ export VALOHAI_API_TOKEN="<your_valohai_token>"
 
 Manage Valohai resources directly in your Terraform configuration:
 
-- [valohai_project](ressources/valohai_project.md) - Create and manage Valohai projects
-- [valohai_team](ressources/valohai_team.md) - Manage team configurations and memberships
-- [valohai_store](ressources/valohai_store.md) - Define and manage Valohai stores
+- [valohai_project](resources/valohai_project.md) - Create and manage Valohai projects
+- [valohai_team](resources/valohai_team.md) - Manage team configurations and memberships
+- [valohai_store](resources/valohai_store.md) - Define and manage Valohai stores
 
 🔍 Data Sources
 
