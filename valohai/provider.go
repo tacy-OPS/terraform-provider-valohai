@@ -1,18 +1,24 @@
 package valohai
 
 import (
+	"context"
 	"os"
 
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // configureProvider configures the provider.
-func configureProvider(d *schema.ResourceData) (interface{}, error) {
+func configureProvider(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
+	_ = ctx
 	// Retrieve the token from the configuration
 	authToken := d.Get("token").(string)
 	if authToken == "" {
 		// Fallback to environment variable if not set in provider config
 		authToken = os.Getenv("VALOHAI_API_TOKEN")
+	}
+	if authToken == "" {
+		return nil, diag.Errorf("valohai provider token is required: set token in provider config or VALOHAI_API_TOKEN env var")
 	}
 
 	// Return an object containing the token for use in resources
@@ -45,6 +51,6 @@ func Provider() *schema.Provider {
 			"valohai_store":   dataSourceStore(),
 		},
 
-		ConfigureFunc: configureProvider,
+		ConfigureContextFunc: configureProvider,
 	}
 }
