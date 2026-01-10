@@ -44,6 +44,7 @@ Manage Valohai resources directly in your Terraform configuration:
 - [valohai_project](resources/valohai_project.md) - Create and manage Valohai projects
 - [valohai_team](resources/valohai_team.md) - Manage team configurations and memberships
 - [valohai_store](resources/valohai_store.md) - Define and manage Valohai stores
+- [valohai_registry_credentials](resources/valohai_registry_credentials.md) - Manages container registry credentials in Valohai
 
 🔍 Data Sources
 
