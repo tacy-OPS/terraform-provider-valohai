@@ -53,3 +53,39 @@ resource "valohai_store" "example" {
   }
   # teams     = [valohai_team.example.id]
 }
+
+resource "valohai_registry_credentials" "docker" {
+  type = "docker"
+  image_pattern = "docker.io/*"
+  configuration = {
+    password = "test"
+    username = "test"
+  }
+}
+
+resource "valohai_registry_credentials" "ecr" {
+  type = "aws-ecr"
+  image_pattern = "ecr.io/*"
+  configuration = {
+    access_key_id = "AKIAIOSFODNN7EXAMPLE"
+    secret_access_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEB"
+    region = "eu-west-1"
+  }
+}
+
+resource "valohai_registry_credentials" "ecr_role" {
+  type = "aws-ecr-role"
+  image_pattern = "ecr-with-role.io/*"
+  configuration = {
+    region = "eu-west-1"
+    role_name = "arn:aws:iam::123456789012:role/MyExampleRole"
+  }
+}
+
+resource "valohai_registry_credentials" "gcp_cr" {
+  type = "gcp-cr"
+  image_pattern = "gcp.io/*"
+  configuration = {
+    service_account_json = "heOhRHt3MyQYfXOD054uqnW7XSlzwBXRjsU45bBD"
+  }
+}
