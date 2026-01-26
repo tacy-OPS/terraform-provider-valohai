@@ -10,7 +10,7 @@ jobs:
   lint-vet:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@v6.0.2
       - uses: actions/setup-go@v6.2.0
         with:
           go-version: '1.24'
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: lint-vet
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@v6.0.2
       - uses: actions/setup-go@v6.2.0
         with:
           go-version: '1.24'
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@v6.0.2
       - uses: actions/setup-go@v6.2.0
         with:
           go-version: '1.24'
